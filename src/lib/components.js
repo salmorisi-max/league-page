@@ -1,3 +1,8 @@
+// src/lib/components/index.js
+// Central export hub for The League components.
+// Simplifies imports across the site, so pages can use:
+// import { Nav, Footer, Awards } from '$lib/components';
+
 import Nav from './Nav/index.svelte';
 import Footer from './Footer.svelte';
 import News from './News/index.svelte';
@@ -18,6 +23,10 @@ import HomePost from './BlogPosts/HomePost.svelte';
 import FullPost from './BlogPosts/FullPost.svelte';
 import Posts from './BlogPosts/Posts.svelte';
 import Standings from './Standings/index.svelte';
+
+// 🏆 Optional: League custom components
+// (e.g., logo header, custom intro, trash talk widget, etc.)
+import LogoHeader from './LogoHeader.svelte'; // <-- Add this if/when you create it
 
 export {
     Nav,
@@ -40,4 +49,5 @@ export {
     Posts,
     FullPost,
     Standings,
+    LogoHeader, // added for your custom league branding
 };
