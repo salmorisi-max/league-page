@@ -7,10 +7,15 @@ export const enableBlog = false;
 
 /*   STEP 2   */
 export const homepageText = `
-  <p><strong>The League</strong> — 12 managers. One trophy. Infinite trash talk.</p>
-  <p>Commissioner: <strong>Ameer</strong> (<em>CPFC</em>)</p>
-  <p>Standings: <strong>Buck Dynasty</strong> leads the charge at 7–1, but no one’s safe when Sunday hits.</p>
-  <p>Stay hungry. Stay ruthless. Stay elevated.</p>
+  <p>Welcome to <strong>The League</strong> — where egos are inflated, trades are lopsided, and excuses are a weekly ritual.</p>
+
+  <p>Commissioner: <strong>Ameer</strong> (<em>CPFC</em>) — the benevolent dictator who somehow manages to approve his own trades faster than anyone else’s.</p>
+
+  <p>Every Sunday, friendships are tested, group chats catch fire, and at least one manager forgets to set their lineup and blames “work.” Draft-day bravado fades fast here. Talk big, lose bigger.</p>
+
+  <p>This isn’t your casual fantasy league — this is <strong>The League</strong>: where trash talk is currency, luck is a myth, and every waiver claim feels personal.</p>
+
+  <p>So buckle up, buttercup. The only thing more fragile than your lineup is your pride.</p>
 `;
 
 /*   STEP 3   */
