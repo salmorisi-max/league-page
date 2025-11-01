@@ -5,12 +5,12 @@
 
 	// League history — The League Champions
 	const pastChampions = [
-		{ year: 2019, name: "🏆 emad313" },
-		{ year: 2020, name: "🏆 zoanzak" },
+		{ year: 2019, name: "🏆 Emad" },
+		{ year: 2020, name: "🏆 Zak" },
 		{ year: 2021, name: "💥 League Explosion" },
 		{ year: 2022, name: "🏆 Abe H" },
-		{ year: 2023, name: "🏆 amiri23" },
-		{ year: 2024, name: "🏆 MOEG10" },
+		{ year: 2023, name: "🏆 Amir" },
+		{ year: 2024, name: "🏆 MOE G" },
 	];
 
 	const { year, champion, second, third, divisions, toilet } = podium;
