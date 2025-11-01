@@ -14,7 +14,7 @@
     playerTwo: propTwo,
   } = data;
 
-  // allow URL params to override props (or fill them if missing)
+  // Allow URL params to override props (or fill them if missing)
   let playerOne = propOne ?? null;
   let playerTwo = propTwo ?? null;
 
@@ -26,43 +26,50 @@
       const two = q.get('two');
       if (one) playerOne = one;
       if (two) playerTwo = two;
-    } catch {}
+    } catch {
+      // ignore
+    }
   });
 
-  // force re-run of the await block on retry
+  // Force re-run of the await block on retry
   let reloadKey = 0;
   const retry = () => { reloadKey += 1; };
 
+  // Normalize IDs to strings to avoid subtle mismatches
   const id = (x) => (x == null ? null : String(x));
 
+  // Display name helpers
   function getDisplayName(leagueTeamManagers, maybeId) {
     if (!leagueTeamManagers || !maybeId) return null;
     const key = String(maybeId);
-    let found = leagueTeamManagers.find(t => String(t?.rosterID) === key);
+    // Try rosterID match
+    let found = leagueTeamManagers.find((t) => String(t?.rosterID) === key);
     if (found?.teamName) return found.teamName;
-    found = leagueTeamManagers.find(t => String(t?.managerID) === key);
+    // Fallback: managerID
+    found = leagueTeamManagers.find((t) => String(t?.managerID) === key);
     if (found?.teamName) return found.teamName;
+    // Last resort
     return found?.username || found?.name || null;
   }
 
   function isValidId(leagueTeamManagers, maybeId) {
     if (!maybeId) return false;
     const key = String(maybeId);
-    return leagueTeamManagers?.some(
-      t => String(t?.rosterID) === key || String(t?.managerID) === key
+    return Array.isArray(leagueTeamManagers) && leagueTeamManagers.some(
+      (t) => String(t?.rosterID) === key || String(t?.managerID) === key
     );
   }
 
   // ---- Head-to-head summary helpers ----
-  // This tries a couple of common shapes:
-  //   recordsInfo.headToHead?.[idA]?.[idB] = { wins, losses, pointsFor, pointsAgainst }
-  //   OR a flat array of games with { homeId, awayId, homeScore, awayScore }
+  // Accepts either:
+  //  - recordsInfo.headToHead[A][B] = { wins, losses, pointsFor, pointsAgainst }
+  //  - recordsInfo.games = [{ homeId, awayId, homeScore, awayScore }, ...]
   function computeH2H(recordsInfo, idA, idB) {
     const A = String(idA ?? '');
     const B = String(idB ?? '');
     if (!A || !B || !recordsInfo) return null;
 
-    // 1) Nested map
+    // Nested map form
     const map = recordsInfo?.headToHead;
     const lookup = map?.[A]?.[B];
     if (lookup) {
@@ -73,7 +80,7 @@
       return { w, l, pf, pa, games: w + l };
     }
 
-    // 2) Flat games list
+    // Flat games form
     const games = Array.isArray(recordsInfo?.games) ? recordsInfo.games : null;
     if (games) {
       let w = 0, l = 0, pf = 0, pa = 0, cnt = 0;
@@ -84,15 +91,15 @@
         const hs = Number(g.homeScore ?? 0);
         const as = Number(g.awayScore ?? 0);
 
-        // Only count direct meetings
         if ((h === A && a === B) || (h === B && a === A)) {
           cnt++;
-          const aIsHome = h === A;
+          const aIsHome = (h === A);
           const aScore = aIsHome ? hs : as;
           const bScore = aIsHome ? as : hs;
           pf += aScore;
           pa += bScore;
-          if (aScore > bScore) w++; else if (aScore < bScore) l++;
+          if (aScore > bScore) w++;
+          else if (aScore < bScore) l++;
         }
       }
       if (cnt > 0) return { w, l, pf, pa, games: cnt };
@@ -120,22 +127,38 @@
 <style>
   .holder { position: relative; z-index: 1; }
   .loading, .error {
-    display: block; width: 85%; max-width: 520px;
-    margin: 80px auto; text-align: center;
+    display: block;
+    width: 85%;
+    max-width: 520px;
+    margin: 80px auto;
+    text-align: center;
   }
   .who {
-    text-align: center; margin: 1.25rem auto 0.25rem;
-    color: var(--g555); font-weight: 600;
+    text-align: center;
+    margin: 1.25rem auto 0.25rem;
+    color: var(--g555);
+    font-weight: 600;
   }
-  .names { display: inline-flex; gap: .5rem; align-items: baseline; color: var(--g333); }
+  .names {
+    display: inline-flex;
+    gap: .5rem;
+    align-items: baseline;
+    color: var(--g333);
+  }
   .vs { color: var(--g555); opacity: .85; }
   .summary {
-    text-align: center; margin: 0.2rem auto 1rem; color: var(--g555);
+    text-align: center;
+    margin: 0.2rem auto 1rem;
+    color: var(--g555);
     font-size: .95rem;
   }
   .btn {
-    margin-top: 14px; padding: 8px 12px; border-radius: 10px;
-    border: 1px solid var(--borderOverride); background: #0f1216; color: var(--g000);
+    margin-top: 14px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--borderOverride);
+    background: #0f1216;
+    color: var(--g000);
     cursor: pointer;
   }
   .btn:hover { box-shadow: 0 6px 20px rgba(0,0,0,.35); }
@@ -173,7 +196,9 @@
           <div class="summary">
             H2H: <strong>{h2h.w}-{h2h.l}</strong>
             &nbsp;•&nbsp; PF/PA: <strong>{h2h.pf}</strong>/<strong>{h2h.pa}</strong>
-            {#if h2h.games > 0}&nbsp;•&nbsp; Games: {h2h.games}{/if}
+            {#if h2h.games > 0}
+              &nbsp;•&nbsp; Games: {h2h.games}
+            {/if}
           </div>
         {:else}
           <div class="summary">No head-to-head results found yet.</div>
