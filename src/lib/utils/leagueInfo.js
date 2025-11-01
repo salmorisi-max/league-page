@@ -7,15 +7,10 @@ export const enableBlog = false;
 
 /*   STEP 2   */
 export const homepageText = `
-  <p>Welcome to <strong>The League</strong> — a 12-team redraft fantasy football league on Sleeper where competition runs deep and bragging rights matter more than the buy-in.</p>
-
+  <p><strong>The League</strong> — 12 managers. One trophy. Infinite trash talk.</p>
   <p>Commissioner: <strong>Ameer</strong> (<em>CPFC</em>)</p>
-
-  <p>As of Week 8, <strong>Buck Dynasty</strong> (@ELEVATE717) sits on top of the standings at <strong>7–1</strong>, riding a six-game win streak. <strong>CPFC</strong> (@ameer1499) and <strong>Brockin’ With Mahomies</strong> (@emad313) round out the top three, both sitting strong at <strong>6–2</strong>.</p>
-
-  <p>Every week brings chaos, trades, and heartbreak — from clutch waiver wire pickups to bench decisions that haunt managers until Monday night. With heated rivalries, league lore, and the occasional lucky bounce, this is where fantasy football gets personal.</p>
-
-  <p><em>May the best lineup win.</em></p>
+  <p>Standings: <strong>Buck Dynasty</strong> leads the charge at 7–1, but no one’s safe when Sunday hits.</p>
+  <p>Stay hungry. Stay ruthless. Stay elevated.</p>
 `;
 
 /*   STEP 3   */
